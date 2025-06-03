@@ -1,4 +1,8 @@
 const router = require('express').Router();
+const {hashPassword} = require('../utils/auth.index')
+const {userModel} = require('../model/user.model')
+
+// render ejs ...
 
 router.get('/' , (req, res, next) => {
      res.render('./index.ejs', {title : "home"})
@@ -15,6 +19,29 @@ router.get('/register' , (req, res, next) => {
 router.get('/profile' , (req, res, next) => {
      res.render('./profile.ejs', {title : "profile", user : {_id : "", userName : "", fullName : "", password : ""}})
 })
-module.exports = router
 
+// registering ...
+
+router.post('/register' , async (req, res, next) => {
+     try {
+          const {fullname : fullname, username, password} = req.body;
+          const hashigPassword = await hashPassword(password);
+          const user = await userModel.findOne({username})
+          if (user) {
+               const refferrer = req?.header('referrer') ?? req.headers.referer
+               req.flash('error', "That name has already been entered!")
+               res.redirect(refferrer ?? '/register')
+          }else {
+               await userModel.create({
+                    fullname,
+                    username,
+                    password : hashigPassword
+               })
+               res.redirect('/login')
+          }
+     } catch (error) {
+          next(error)
+     }
+})
+module.exports = router
 //

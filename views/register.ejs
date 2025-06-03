@@ -8,26 +8,17 @@
         <form class="w-100" style="max-width: 400px; margin: auto;" action="/register" method="post">
             <div class="mb-3 text-start">
                 <label for="fullName" class="form-label">full name</label>
-                <input type="fullName" class="form-control" id="fullName" placeholder="enter your full name">
+                <input type="fullName" class="form-control" name="fullname"  id="fullName" placeholder="enter your full name">
             </div>
           <div class="mb-3 text-start">
             <label for="userName" class="form-label">user name</label>
-            <input type="userName" class="form-control" id="userName" placeholder="enter your user name">
+            <input type="userName" class="form-control" name="username" id="userName" placeholder="enter your user name">
           </div>
           <div class="mb-3 text-start">
             <label for="password" class="form-label">password</label>
-            <input type="password" class="form-control" id="password" placeholder="enter your password">
+            <input type="password" class="form-control" name="password"  id="password" placeholder="enter your password">
           </div>
-        </form>
-      </div>
-
-      <div class="container my-4 d-flex align-items-center justify-content-center">
-        <p class="text-danger fw-bold text-center"> <%= messages?.error?? "" %> </p>
-      </div>
-
-      
-    
-    
+              
       <div class="container mb-4">
         <div class="row justify-content-center">
             <div class="col-6 col-sm-4 mb-2">
@@ -40,5 +31,11 @@
             <a href="/" class="btn btn-outline-danger w-100">Home</a>
           </div>
         </div>
-      </div>    
+      </div>   
+        </form>
+      </div>
+
+      <div class="container my-4 d-flex align-items-center justify-content-center">
+        <p class="text-danger fw-bold text-center"> <%= messages?.error?? "" %> </p>
+      </div> 
 </div>

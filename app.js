@@ -1,3 +1,4 @@
+// add module... 
 const express = require('express')
 var expressEjsLayouts = require('express-ejs-layouts')
 const {default : mongoose} = require('mongoose')
@@ -6,13 +7,17 @@ const dotenv = require('dotenv')
 const AllRoutes = require('./Routes/index')
 const flash = require('express-flash')
 const session = require('express-session')
+const { errorHandler } = require('./utils/error.Handler')
+const { notFoundHandler } = require('./utils/error.Handler')
 dotenv.config()
 
-mongoose.connect("mongodb://localhost:27017/passport", {}).then(() => {
+// connect to dataBase
+mongoose.connect("mongodb://localhost:27017/login", {}).then(() => {
     console.log("dataBase conected!!");
 })
 
 
+// settings
 App.use(express.static("public"))
 App.use(express.json());
 App.use(express.urlencoded({extended : false}))
@@ -21,7 +26,7 @@ App.use(flash())
 App.set("view engine" , "ejs");
 App.set("layout", "./layout/main.ejs")
 
-
+// session
 App.use(session({
     secret : "secret key",
     saveUninitialized : false,
@@ -30,6 +35,10 @@ App.use(session({
 
 // Routes
 App.use(AllRoutes)
+
+//error & not Found Handler
+App.use(notFoundHandler);
+App.use(errorHandler)
 
 
 const PORT = process.env.PORT || 3000;
